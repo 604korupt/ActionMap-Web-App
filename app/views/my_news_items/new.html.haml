@@ -1,0 +1,22 @@
+.row.mt-2
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        %h1.text-center Find News Articles
+
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        = form_for :news_item, url: representative_search_my_news_item_path(@representative), method: :post do |f|
+            .form-group.row
+                .col-sm-3
+                    = label :news_item, :representative_id, class: 'col-form-label'
+                .col-sm-13
+                    = select :news_item, :representative_id, @representatives_list, { include_blank: true },
+                    class: 'form-control'
+
+            .form-group.row
+                .col-sm-2
+                    = label :news_item, :issue, class: 'col-form-label'
+                .col-sm-13
+                    = select :news_item, :issue, @issues_list, { include_blank: false },
+                    class: 'form-control'
+
+            .actions
+                = f.submit 'Search Articles', class: 'btn btn-primary'

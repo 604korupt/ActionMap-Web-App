@@ -1,0 +1,51 @@
+.row.mt-2
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        %h1.text-center Select News Article
+        .card.mb-4
+            .card-body
+                %h5.card-title Representative Information
+                %p.mb-1
+                    %strong Representative:
+                    = @representative.name
+                %p.mb-0
+                    %strong Issue:
+                    = @issue
+        = form_for :news_item, url: representative_create_my_news_item_path(@representative), method: :post do |f|
+            .form-group
+                - @articles.each do |article|
+                    .card.mb-3
+                        .card-body
+                            .form-check
+                                = radio_button_tag 'news_item[title]', article[:title], false,
+                                class: 'form-check-input',
+                                data: { link: article[:link], description: article[:description] }
+                        .card-body.d-flex.justify-content-end
+                        %h5.card-title= article[:title]
+                        %p.card-text
+                            %strong Link:
+                            = link_to article[:link], article[:link], target: '_blank', rel: 'noopener'
+                        %p.card-text
+                            %strong Description:
+                            = article[:description]
+            = hidden_field_tag 'news_item[representative_id]', @representative.id
+            = hidden_field_tag 'news_item[issue]', @issue
+            = hidden_field_tag 'news_item[link]', '', id: 'news_item_link'
+            = hidden_field_tag 'news_item[description]', '', id: 'news_item_description'
+            .form-group
+                = label_tag :rating, 'Rate this article (1-5):'
+                = select_tag 'news_item[rating]', options_for_select(1..5), class: 'form-control'
+            .actions
+                = f.submit 'Save', class: 'btn btn-primary'
+
+:javascript
+    document.addEventListener('DOMContentLoaded', function() {
+        const radioButtons = document.querySelectorAll('input[name="news_item[title]"]');
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const selectedLink = this.dataset.link;
+                const selectedDescription = this.dataset.description;
+                document.getElementById('news_item_link').value = selectedLink;
+                document.getElementById('news_item_description').value = selectedDescription;
+            });
+        });
+    });

@@ -1,0 +1,10 @@
+.row.mt-2
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        %h1.text-center Search for Campaign Finance
+
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        = render 'form',
+        form_url: campaign_finance_path,
+        form_method: :post,
+        cycles: @cycles,
+        categories: @categories

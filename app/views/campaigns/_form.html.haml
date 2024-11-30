@@ -1,0 +1,15 @@
+= form_for :campaigns, url: form_url, html: { method: form_method } do |f|
+    .form-group.row
+        .col-sm-2
+            = label :campaigns, :cycle, class: 'col-form-label'
+        .col-sm-10
+            = select :campaigns, :cycle, cycles, { include_blank: false },
+            class: 'form-control'
+    .form-group.row
+        .col-sm-2
+            = label :campaigns, :categories, class: 'col-form-label'
+        .col-sm-10
+            = select :campaigns, :categories, categories, { include_blank: false },
+            class: 'form-control'
+    .actions
+        = f.submit 'Search', class: 'btn btn-primary'
